@@ -1,6 +1,4 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: %i[ show edit update destroy ]
-
   def index
     @properties = Property.all
   end
@@ -20,14 +18,19 @@ class PropertiesController < ApplicationController
   def create
     @property = Property.new(property_params)
     if @property.save
-      redirect_to new_property_path
+      redirect_to new_property_path, notice: "物件を登録しました"
     else
-      render :mew  
+      render :new  
     end
   end
 
   def update
     @property = Property.find(params[:id])
+    if @property.update(property_params)
+      redirect_to properties_path, notice: "更新しました"
+    else
+      render :edit
+    end
   end
 
   def destroy
