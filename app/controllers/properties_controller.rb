@@ -17,11 +17,19 @@ class PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
-    if @property.save
-      redirect_to properties_path, notice: "物件を登録しました"
+    if params[:back]
+      render :new
     else
-      render :new  
-    end
+      if @property.save
+        redirect_to properties_path, notice: "物件を登録しました"
+      else
+        render :new  
+      end
+    end  
+  end
+
+  def confirm
+    @property = Property.new(property_params)
   end
 
   def update
