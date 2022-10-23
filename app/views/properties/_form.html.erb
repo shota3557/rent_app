@@ -1,4 +1,4 @@
-<%= form_with(model: property, local: true, do |form| %>
+<%= form_with(model: property, local: true) do |form| %>
   <% if property.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(property.errors.count, "件") %>のエラーがあります</h2>
@@ -31,26 +31,27 @@
     <%= form.text_field :year %>
   </div>
 
-  <div class="field">
+  < class="field">
     <%= form.label :備考 %>
     <%= form.text_area :remarks %>
   </div>
 
+<hr>
+
+  <% n = 0 %>
   <%= form.fields_for :near_stations do |near_station| %>
+  <h2>最寄り駅<%= n += 1 %></h2>
+
+    <%= near_station.label :路線名 %><br>
+    <%= near_station.text_field :train_name %>
+  
+    <%= near_station.label :駅名 %><br>
+    <%= near_station.text_field :station_name %>
     
-    <div class="train_name">
-      <%= near_station.label :路線名 %><br>
-      <%= near_station.text_field :train_name %>
-    </div>
+    <%= near_station.label :徒歩分数 %><br>
+    <%= near_station.text_field :walking_time %>分<br>
     
-    <div class="station_name">
-      <%= near_station.label :駅名 %><br>
-      <%= near_station.text_field :station_name %>
-    </div>
-    <div class="walking_time">
-      <%= near_station.label :徒歩分数 %><br>
-      <%= near_station.text_field :walking_time %>分<br>
-    </div>
-    <%= form.submit '登録する' %>
   <% end %>
+  
+  <%= form.submit '登録する' %>
 <% end %>
