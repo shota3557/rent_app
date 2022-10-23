@@ -18,7 +18,7 @@ class PropertiesController < ApplicationController
   def create
     @property = Property.new(property_params)
     if @property.save
-      redirect_to new_property_path, notice: "物件を登録しました"
+      redirect_to properties_path, notice: "物件を登録しました"
     else
       render :new  
     end
@@ -36,6 +36,7 @@ class PropertiesController < ApplicationController
   def destroy
     @property = Property.find(params[:id])
     @property.destroy
+    redirect_to properties_path, notice: "物件を削除しました"
   end
 
   private
